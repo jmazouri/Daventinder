@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daventinder.ConsoleTest", "Daventinder\Daventinder.ConsoleTest.csproj", "{A96396E5-7565-4EE2-93F2-E7CFAC3E11FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daventinder.ConsoleTest", "Daventinder.ConsoleTest\Daventinder.ConsoleTest.csproj", "{A96396E5-7565-4EE2-93F2-E7CFAC3E11FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daventinder.Shared", "Daventinder.Shared\Daventinder.Shared.csproj", "{7948789C-8568-46B4-B888-187F5D12AC28}"
 EndProject
