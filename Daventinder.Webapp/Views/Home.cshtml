@@ -1,3 +1,24 @@
-﻿@using System
-<h1>SUP MANG</h1>
-<h3>@DateTime.Now</h3>
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+@using System
+@using System.Collections.Generic
+@using Daventinder.Shared
+@{
+    MenuPdfParser parser = Model as MenuPdfParser;
+}
+
+<div class="mdl-cell mdl-cell--8-col">
+    @foreach (Menu menu in parser.Menus)
+    {
+        <h2>@menu.Date.ToShortDateString()</h2>
+        foreach (KeyValuePair<DailyMeal, List<string>> meal in menu.DailyMeals)
+        {
+            <h4>@meal.Key</h4>
+            <ul>
+                @foreach (string item in meal.Value)
+                {
+                    <li>@item</li>
+                }
+            </ul>
+        }
+    }
+</div>
