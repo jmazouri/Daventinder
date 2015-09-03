@@ -12,9 +12,6 @@ namespace Daventinder.Webapp.App.Modules
     {
         public HomeModule()
         {
-            DiningWebpageParser parser = new DiningWebpageParser("http://www.davenport.edu/dining/dining-hall/weeks-menu");
-            MenuPdfParser pdfParser = new MenuPdfParser(parser.PdfList);
-
             Get["/"] = x => View["Home", pdfParser.Menus.OrderByDescending(d=>d.Date).Take(1)];
         }
     }

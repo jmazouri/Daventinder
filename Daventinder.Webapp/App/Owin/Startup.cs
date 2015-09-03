@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Daventinder.Webapp.App.Database;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Nancy;
@@ -16,11 +17,7 @@ namespace Daventinder.Webapp
     {
         public void Configuration(IAppBuilder app)
         {
-            var sb =
-                new NpgsqlConnectionStringBuilder("Server=192.168.1.54;Port=5432;Database=daventinder;User Id=postgres;Password=1234;")
-                {
-                    Pooling = false
-                };
+            var sb = new NpgsqlConnectionStringBuilder(ConnectionProvider.ConnectionString) { Pooling = false };
 
             JobStorage.Current = new PostgreSqlStorage(sb.ConnectionString);
 
@@ -30,6 +27,8 @@ namespace Daventinder.Webapp
                .UseNancy(options => options.PassThroughWhenStatusCodesAre(
                    HttpStatusCode.NotFound,
                     HttpStatusCode.InternalServerError));
+
+            RecurringJob.AddOrUpdate(() => new MenuDbUpdater().UpdateMenus(), Cron.Daily(6));
         }
     }
 }
