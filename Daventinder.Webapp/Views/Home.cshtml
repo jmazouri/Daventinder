@@ -1,24 +1,29 @@
 ﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
 @using System
 @using System.Collections.Generic
+@using System.Linq
 @using Daventinder.Shared
 @{
-    MenuPdfParser parser = Model as MenuPdfParser;
+    IEnumerable<Menu> menus = Model as IEnumerable<Menu>;
 }
 
-<div class="mdl-cell mdl-cell--8-col">
-    @foreach (Menu menu in parser.Menus)
+@foreach (Menu menu in menus)
+{
+    <h2>@menu.Date.ToShortDateString()</h2>
+    foreach (KeyValuePair<DailyMeal, List<string>> meal in menu.DailyMeals)
     {
-        <h2>@menu.Date.ToShortDateString()</h2>
-        foreach (KeyValuePair<DailyMeal, List<string>> meal in menu.DailyMeals)
-        {
-            <h4>@meal.Key</h4>
-            <ul>
+        <h4>@meal.Key</h4>
+
+            <div class="mdl-grid">
                 @foreach (string item in meal.Value)
                 {
-                    <li>@item</li>
+                    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone mdl-cell--4-col-tablet mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand"></div>
+                        <div class="mdl-card__actions">
+                            <span class="demo-card-image__filename">@item</span>
+                        </div>
+                    </div>
                 }
-            </ul>
-        }
+            </div>
     }
-</div>
+}
