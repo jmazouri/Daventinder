@@ -3,27 +3,62 @@
 @using System.Collections.Generic
 @using System.Linq
 @using Daventinder.Shared
+@using Humanizer
 @{
-    IEnumerable<Menu> menus = Model as IEnumerable<Menu>;
+    IEnumerable<Menu> menus = Model.Menus as IEnumerable<Menu>;
+    Dictionary<string, Rating> ratings = Model.Ratings as Dictionary<string, Rating>;
 }
-
-@foreach (Menu menu in menus)
-{
-    <h2>@menu.Date.ToShortDateString()</h2>
-    foreach (KeyValuePair<DailyMeal, List<string>> meal in menu.DailyMeals)
+<div class="mdl-grid">
+    @if (!menus.Any())
     {
-        <h4>@meal.Key</h4>
-
-            <div class="mdl-grid">
-                @foreach (string item in meal.Value)
-                {
-                    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone mdl-cell--4-col-tablet mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title mdl-card--expand"></div>
-                        <div class="mdl-card__actions">
-                            <span class="demo-card-image__filename">@item</span>
-                        </div>
-                    </div>
-                }
-            </div>
+        <div><h1>No Menus Available!</h1></div>
+        <div><h3>Complain to DU Dining to update the menus!</h3></div>
+        <div><a href="/all"><h6>View All Menus</h6></a></div>
     }
-}
+    @foreach (Menu menu in menus)
+    {
+        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col">
+            <h2>@menu.Date.ToShortDateString()</h2>
+            @foreach (KeyValuePair<DailyMeal, List<string>> meal in menu.DailyMeals)
+            {
+                <h4>@meal.Key</h4>
+
+                <div class="mdl-grid">
+                    @foreach (string item in meal.Value)
+                    {
+                        Rating currentRating = (ratings.ContainsKey(item) ? ratings[item] : new Rating(0, 0));
+
+                        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone mdl-cell--4-col-tablet mdl-card demo-card-image mdl-shadow--2dp"
+                             style="background: url('/image/@(item).jpg') center/cover">
+                            <div class="ratingcontainer" style="background-color: rgba(0, 0, 0, 0.2); height: 8px;">
+                                <div class="goodratingbar ratingbar mdl-color--green" style="width: @("{0:0.00%}".FormatWith(currentRating.UpvotePercent));">
+                                    @("{0:0%}".FormatWith(currentRating.UpvotePercent))
+                                </div>
+                                <div class="badratingbar ratingbar mdl-color--red" style="width: @("{0:0.00%}".FormatWith(currentRating.DownvotePercent));">
+                                    @("{0:0%}".FormatWith(currentRating.DownvotePercent))
+                                </div>
+                            </div>
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                            <div class="mdl-card__actions">
+                                <span class="demo-card-image__filename">
+                                    @item.Humanize(LetterCasing.Title).Truncate(50)
+                                </span>
+                            </div>
+
+                            <div class="mdl-card__menu" style="right: 0; left: 16px;">
+                                <button data-item="@item" class="upbutton ratebutton mdl-button mdl-button--fab mdl-button--mini-fab mdl-color--green mdl-js-button mdl-js-ripple-effect">
+                                    +@(currentRating.Upvotes)
+                                </button>
+                            </div>
+                            <div class="mdl-card__menu">
+                                <button data-item="@item" class="downbutton ratebutton mdl-button mdl-button--fab mdl-button--mini-fab mdl-color--red mdl-js-button mdl-js-ripple-effect">
+                                    -@(currentRating.Downvotes)
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>

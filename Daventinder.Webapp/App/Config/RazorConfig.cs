@@ -12,12 +12,14 @@ namespace Daventinder.Webapp.App.Config
         public IEnumerable<string> GetAssemblyNames()
         {
             yield return "Daventinder.Shared";
+            yield return "Humanizer";
         }
 
         public IEnumerable<string> GetDefaultNamespaces()
         {
             yield return "Daventinder.Webapp";
             yield return "Daventinder.Shared";
+            yield return "Humanizer";
         }
 
         public bool AutoIncludeModelNamespace

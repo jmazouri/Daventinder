@@ -24,7 +24,17 @@ namespace Daventinder.Shared
                 if (day.FirstChild.HasAttribute("href"))
                 {
                     DateTime cur = DateTime.Parse(day.FirstChild.InnerText);
-                    PdfList.Add(cur, day.FirstChild["href"]);
+                    string linkUrl = day.FirstChild["href"];
+
+                    if (!linkUrl.EndsWith("pdf"))
+                    {
+                        CQ tempdoc = CQ.CreateFromUrl(linkUrl);
+                        PdfList.Add(cur, tempdoc["a"].Where(d => d.HasAttribute("href")).First(d => d["href"].EndsWith("pdf"))["href"]);
+                    }
+                    else
+                    {
+                        PdfList.Add(cur, linkUrl);
+                    }
                 }
             }
         }

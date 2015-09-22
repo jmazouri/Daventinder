@@ -1,0 +1,74 @@
+﻿.demo-card-image
+{
+    z-index: 99;
+    left: 0px;
+}
+
+.demo-card-image > .mdl-card__actions
+{
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.demo-card-image__filename
+{
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.ratebutton
+{
+    color: white;
+}
+
+.rotate-left
+{
+    transform: rotate(10deg) scale(0.9);
+    transition: 0.5s;
+    left: 60px;
+}
+
+.rotate-right
+{
+    transform: rotate(-10deg) scale(0.9);
+    transition: 0.5s;
+    left: -60px;
+}
+
+.rotate-back
+{
+    transform: rotate(0) scale(1);
+    transition: 0.5s;
+    left: 0px;
+}
+
+.ratingbar
+{
+    box-sizing: border-box;
+
+    position: relative;
+    z-index: 999;
+
+    transition: 0.5s;
+    height: 100%;
+    float: left;
+    text-align: center;
+    color: rgba(0, 0, 0, 0);
+
+    opacity: 0.7;
+}
+
+.ratingbar:hover
+{
+    transition: 0.5s;
+    height: 22px;
+    padding: 2px 0 0 0;
+    color: white;
+
+    opacity: 1;
+    border: 1px solid rgba(0,0,0,0.4);
+}
+
+.ratebutton {
+    font-size: 1vw;
+}

@@ -25,6 +25,12 @@ namespace Daventinder.Shared
             get { return DailyMeals.SelectMany(d => d.Value).ToList(); }
         }
 
+        public Menu(DateTime date, Dictionary<DailyMeal, List<string>> _dailyMeals)
+        {
+            Date = date;
+            DailyMeals = _dailyMeals;
+        }
+
         public Menu(DateTime date, string menuContent)
         {
             Date = date;
@@ -85,7 +91,7 @@ namespace Daventinder.Shared
 
                 if (items.ContainsKey(lastSection))
                 {
-                    items[lastSection].Add(input);
+                    items[lastSection].Add(input.ToLower());
                 }
                 else
                 {

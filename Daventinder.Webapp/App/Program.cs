@@ -14,7 +14,11 @@ namespace Daventinder.Webapp
         {
             LoggingExtensions.Logging.Log.InitializeWith<LoggingExtensions.NLog.NLogLog>();
 
-            var url = "http://+:1234";
+#if DEBUG
+            var url = "http://localhost:1515";
+#else
+            var url = "http://daventinder.xyz:80";
+#endif
 
             LogExtensions.Log(typeof(Program)).Info("Initializing OWIN with url {0}", url);
 

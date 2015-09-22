@@ -28,6 +28,8 @@ namespace Daventinder.Webapp
                    HttpStatusCode.NotFound,
                     HttpStatusCode.InternalServerError));
 
+            MenuDbRepository.Current.Initialize();
+
             RecurringJob.AddOrUpdate(() => new MenuDbUpdater().UpdateMenus(), Cron.Daily(6));
         }
     }
