@@ -17,7 +17,7 @@
     }
     @foreach (Menu menu in menus)
     {
-        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col">
+        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col">
             <h2>@menu.Date.ToShortDateString()</h2>
             @foreach (KeyValuePair<DailyMeal, List<string>> meal in menu.DailyMeals)
             {
@@ -28,7 +28,7 @@
                     {
                         Rating currentRating = (ratings.ContainsKey(item) ? ratings[item] : new Rating(0, 0));
 
-                        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone mdl-cell--4-col-tablet mdl-card demo-card-image mdl-shadow--2dp"
+                        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone mdl-cell--4-col-tablet mdl-card demo-card-image mdl-shadow--2dp"
                              style="background: url('/image/@(item).jpg') center/cover">
                             <div class="ratingcontainer" style="background-color: rgba(0, 0, 0, 0.2); height: 8px;">
                                 <div class="goodratingbar ratingbar mdl-color--green" style="width: @("{0:0.00%}".FormatWith(currentRating.UpvotePercent));">

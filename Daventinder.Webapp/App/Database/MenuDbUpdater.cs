@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Daventinder.Shared;
 using Daventinder.Webapp.App.Bing;
@@ -15,6 +16,8 @@ namespace Daventinder.Webapp.App.Database
 {
     public class MenuDbUpdater
     {
+        public static bool SkipImages { get; set; }
+
         public void UpdateMenus()
         {
             DiningWebpageParser parser = new DiningWebpageParser("http://www.davenport.edu/dining/dining-hall/weeks-menu");
@@ -36,8 +39,17 @@ namespace Daventinder.Webapp.App.Database
                 {
                     Directory.CreateDirectory("images");
 
-                    foreach (string item in m.AllMeals.Where(item => !File.Exists(Path.Combine("images", item + ".jpg"))))
+                    foreach (string srcItem in m.AllMeals.Where(item => !File.Exists(Path.Combine("images", item + ".jpg"))))
                     {
+                        if (SkipImages)
+                        {
+                            this.Log().Info("Skipping image for {0}", srcItem);
+                            continue;
+                        }
+
+                        Regex rgx = new Regex("[^a-zA-Z0-9 -]", RegexOptions.Compiled);
+                        string item = rgx.Replace(srcItem, "");
+
                         try
                         {
                             int resultCount = 0;

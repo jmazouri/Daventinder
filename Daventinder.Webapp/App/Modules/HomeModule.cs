@@ -49,7 +49,7 @@ namespace Daventinder.Webapp.App.Modules
         {
             Get["/"] = x => View["Home", new
             {
-                Menus = MenuDbRepository.Current.CurrentMenus,
+                Menus = MenuDbRepository.Current.CurrentMenus.OrderBy(d=>d.Date),
                 Ratings = MenuDbRepository.Current.GetRatings()
             }];
 

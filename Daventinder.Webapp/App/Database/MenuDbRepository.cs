@@ -58,7 +58,7 @@ namespace Daventinder.Webapp.App.Database
         {
             if ((bool) _conn.ExecuteScalar(@"SELECT EXISTS(SELECT 1 FROM menus WHERE DATE = @a)", new {a = date}))
             {
-                _conn.Execute(@"UPDATE menus SET DailyMeals = @a", new { a = jsonMenu });
+                _conn.Execute(@"UPDATE menus SET DailyMeals = @a WHERE DATE = @b", new { a = jsonMenu, b = date });
                 this.Log().Info("Updated menu for {0}", date);
             }
             else

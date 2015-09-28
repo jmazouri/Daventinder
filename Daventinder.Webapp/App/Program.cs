@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Daventinder.Webapp.App.Database;
 using Hangfire;
 using Microsoft.Owin.Hosting;
 
@@ -16,6 +17,7 @@ namespace Daventinder.Webapp
 
 #if DEBUG
             var url = "http://localhost:1515";
+            MenuDbUpdater.SkipImages = true;
 #else
             var url = "http://daventinder.xyz:80";
 #endif
